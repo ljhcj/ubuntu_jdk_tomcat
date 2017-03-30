@@ -12,8 +12,10 @@ RUN apt-get update \
     && echo 'Asia/Shanghai' >/etc/timezone 
 
 # 把java与tomcat添加到容器中
-RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-7u79-linux-x64.tar.gz 
+RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-7u79-linux-x64.tar.gz
+RUN tar -zxvf jdk-7u79-linux-x64.tar.gz -C /usr/local/
 RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/apache-tomcat-7.0.69.tar.gz
+RUN tar -zxvf apache-tomcat-7.0.69.tar.gz -C /usr/local/
 
 # 配置java与tomcat环境变量
 ENV JAVA_HOME /usr/local/jdk1.7.0_79
@@ -27,6 +29,7 @@ ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin
 
 # 修改tomcat内存大小并设置字符编码格式支持UTF8
 RUN sed -i 's/ redirectPort="8443"  \/>/ redirectPort="8443" URIEncoding="UTF-8" \/>/1' /usr/local/apache-tomcat-7.0.69/conf/server.xml
+RUN sed -i 's/pattern="%h %l %u %t &quot;%r&quot; %s %b" \/>/pattern="[%a] [%u] [%t] ['%r'] [%s] [%B] [%{X-Forwarded-For}i] [%{Referer}i] [%{User-Agent}i]" \/>/1' /usr/local/apache-tomcat-7.0.69/conf/server.xml 
 RUN sed -i '/^\# OS specific/i \JAVA_OPTS="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -server -Xms1024m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:MaxNewSize=512m"' /usr/local/apache-tomcat-7.0.69/bin/catalina.sh
 
 
