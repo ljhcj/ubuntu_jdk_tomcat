@@ -12,10 +12,9 @@ RUN apt-get update \
     && echo 'Asia/Shanghai' >/etc/timezone 
 
 # 把java与tomcat添加到容器中
-RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-7u79-linux-x64.tar.gz
-RUN cd /usr/local/ | tar -zxvf jdk-7u79-linux-x64.tar.gz
-RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/apache-tomcat-7.0.69.tar.gz
-RUN cd /usr/local/ | tar -zxvf apache-tomcat-7.0.69.tar.gz
+RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-7u79-linux-x64.tar.gz \
+    && wget -P /usr/local/ http://download.zhongyinginfo.com/soft/apache-tomcat-7.0.69.tar.gz \
+    && cd /usr/local/ && tar -zxvf jdk-7u79-linux-x64.tar.gz && tar -zxvf apache-tomcat-7.0.69.tar.gz && rm -rf *.tar.gz
 
 # 配置java与tomcat环境变量
 ENV JAVA_HOME /usr/local/jdk1.7.0_79
