@@ -5,7 +5,7 @@ FROM registry.cn-qingdao.aliyuncs.com/gf/ubuntu-14.04:latest
 # 作者
 MAINTAINER  "sh_ljhcj@163.com" 2017-03-30
 
-# 安装更新、安装wget和ssh工具、修改系统时区
+# 安装更新、安装wget和vim工具、修改系统时区
 RUN apt-get update \
     && apt-get -y install wget vim \
     && /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
