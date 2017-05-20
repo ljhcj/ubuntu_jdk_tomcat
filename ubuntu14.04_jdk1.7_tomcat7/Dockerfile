@@ -1,4 +1,4 @@
-# 默认ubuntu server长期支持版本，当前版本14.04
+# 默认ubuntu server长期支持版本，当前版本14.04。
 # 此Dockerfile生成Ubuntu14.04+Jdk1.7+Tomcat7的基础镜像
 FROM registry.cn-qingdao.aliyuncs.com/gf/ubuntu-14.04:latest
 
