@@ -3,7 +3,7 @@
 FROM registry.cn-hangzhou.aliyuncs.com/gf/ubuntu-14.04:latest
 
 # 作者
-MAINTAINER  "sh_ljhcj@163.com" 2017-03-30
+MAINTAINER  "sh_ljhcj@163.com" 2017-06-06
 
 # 安装更新、安装wget和ssh工具、修改系统时区
 RUN apt-get update \
