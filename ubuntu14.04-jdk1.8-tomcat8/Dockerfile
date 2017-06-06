@@ -1,6 +1,6 @@
 # 默认ubuntu server长期支持版本，当前版本14.04
 # 此Dockerfile生成Ubuntu14.04+Jdk1.8+Tomcat8的基础镜像
-FROM registry.cn-hangzhou.aliyuncs.com/gf/ubuntu-14.04:latest
+FROM registry.cn-qingdao.aliyuncs.com/zyyl/ubuntu14.04:latest
 
 # 作者
 MAINTAINER  "sh_ljhcj@163.com" 2017-06-06
@@ -27,10 +27,9 @@ ENV CATALINA_BASE /usr/local/apache-tomcat-8.5.4
 ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin
 
 # 修改tomcat内存大小并设置字符编码格式支持UTF8和日志格式
-RUN sed -i '73s/redirectPort="8443"/ redirectPort="8443" URIEncoding="UTF-8"/' /usr/local/apache-tomcat-8.5.4/conf/server.xml \
-    && sed -i 's/pattern="%h %l %u %t &quot;%r&quot; %s %b" \/>/pattern="[%a] [%u] [%t] ['%r'] [%s] [%B] [%{X-Forwarded-For}i] [%{Referer}i] [%{User-Agent}i]" \/>/1' /usr/local/apache-tomcat-8.5.4/conf/server.xml \
-    && sed -i '/^\# OS specific/i \JAVA_OPTS="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -server -Xms1024m -Xmx1024m  -XX:MaxNewSize=512m"' /usr/local/apache-tomcat-8.5.4/bin/catalina.sh
-
+RUN sed -i '73s/redirectPort="8443"/ redirectPort="8443" URIEncoding="UTF-8"/' /usr/local/apache-tomcat-8.5.4/conf/server.xml
+ADD ADD server.xml  /usr/local/apache-tomcat-8.5.4/conf/  
+    
 #容器运行时对外开放的端口
 EXPOSE 8080
 
