@@ -28,7 +28,7 @@ ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin
 
 # 修改tomcat内存大小并设置字符编码格式支持UTF8和日志格式
 RUN sed -i '73s/redirectPort="8443"/ redirectPort="8443" URIEncoding="UTF-8"/' /usr/local/apache-tomcat-8.5.4/conf/server.xml
-ADD ADD server.xml  /usr/local/apache-tomcat-8.5.4/conf/  
+ADD server.xml  /usr/local/apache-tomcat-8.5.4/conf/  
     
 #容器运行时对外开放的端口
 EXPOSE 8080
