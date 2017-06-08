@@ -14,7 +14,8 @@ RUN apt-get update \
 #把java与tomcat添加到容器中
 RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-8u111-linux-x64.tar.gz \
     && wget -P /usr/local/ http://download.zhongyinginfo.com/soft/apache-tomcat-8.5.4.tar.gz \
-    && cd /usr/local/ && tar -zxvf jdk-8u111-linux-x64.tar.gz && tar -zxvf apache-tomcat-8.5.4.tar.gz && rm -rf *.tar.gz
+    && cd /usr/local/ && tar -zxvf jdk-8u111-linux-x64.tar.gz && tar -zxvf apache-tomcat-8.5.4.tar.gz && rm -rf *.tar.gz \
+    && rm -rf /usr/local/apache-tomcat-8.5.4/conf/server.xml
 
 #配置java与tomcat环境变量
 ENV JAVA_HOME /usr/local/jdk1.8.0_111
@@ -28,7 +29,7 @@ ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin
 
 # 修改tomcat内存大小并设置字符编码格式支持UTF8和日志格式
 RUN sed -i '/^\# OS specific/i \JAVA_OPTS="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -server -Xms1024m -Xmx1024m  -XX:MaxNewSize=512m"' /usr/local/apache-tomcat-8.5.4/bin/catalina.sh
-RUN sed -i '/^\<Context\>/i \ \<Resources cachingAllowed="true" cacheMaxSize="100000" \/\>' /usr/local/apache-tomcat-8.5.4/conf/context.xml
+RUN sed -i '/<Context>/a\<Resources cachingAllowed="true" cacheMaxSize="100000" />' /usr/local/apache-tomcat-8.5.4/conf/context.xml
 ADD server.xml  /usr/local/apache-tomcat-8.5.4/conf/
     
 #容器运行时对外开放的端口
