@@ -142,7 +142,7 @@
 
       <Host name="localhost"  appBase="webapps"
             unpackWARs="true" autoDeploy="true">
-        <Context path="" docBase="ehealth" debug="0" privileged="true"/>
+      <Context path="" docBase="jenkins" debug="0" privileged="true"/>
 
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
