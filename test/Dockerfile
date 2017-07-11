@@ -8,7 +8,7 @@ RUN apt-get update \
     && /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo 'Asia/Shanghai' >/etc/timezone \
     && apt-get autoclean && apt-get --purge -y autoremove && \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /var/lib/apt/lists/*
 
 # 把java与tomcat添加到容器中
 RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jre-7u79-linux-x64.tar.gz \
@@ -27,7 +27,9 @@ ENV CATALINA_BASE /usr/local/apache-tomcat-7.0.69
 ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin
 
 # 修改tomcat内存大小并设置字符编码格式支持UTF8和日志格式
-RUN sed -i '/^\# OS specific/i \JAVA_OPTS="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -server -Xms1024m -Xmx2048m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:MaxNewSize=512m"' /usr/local/apache-tomcat-7.0.69/bin/catalina.sh
+RUN sed -i '/^\# OS specific/i \JAVA_OPTS="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -server -Xms1024m -Xmx2048m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:MaxNewSize=512m"' /usr/local/apache-tomcat-7.0.69/bin/catalina.sh \
+    && apt-get autoclean && apt-get --purge -y autoremove && \
+    && rm -rf /var/lib/apt/lists/*
 ADD server.xml  /usr/local/apache-tomcat-7.0.69/conf/
 
 # 容器运行时对外开放的端口
