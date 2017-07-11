@@ -6,7 +6,8 @@ FROM registry.cn-qingdao.aliyuncs.com/zyyl/ubuntu14.04:latest
 RUN apt-get update \
     && apt-get -y install wget vim \
     && /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && echo 'Asia/Shanghai' >/etc/timezone 
+    && echo 'Asia/Shanghai' >/etc/timezone \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # 把java与tomcat添加到容器中
 RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jre-7u79-linux-x64.tar.gz \
