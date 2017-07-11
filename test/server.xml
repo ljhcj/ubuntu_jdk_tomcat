@@ -134,7 +134,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
                prefix="localhost_access_log." suffix=".txt"
-	             pattern="[%a] [%u] [%t] ['%r'] [%s] [%B] [%{Referer}i] [%{User-Agent}i] [%{X-Real-IP}i]"
+	       pattern="[%a] [%u] [%t] ['%r'] [%s] [%B] [%{X-Forwarded-For}i] [%{Referer}i] [%{User-Agent}i]"
        />
       </Host>
     </Engine>
