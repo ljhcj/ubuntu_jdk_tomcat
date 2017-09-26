@@ -36,6 +36,7 @@ RUN sed -i '/^\# OS specific/i \JAVA_OPTS="-Dfile.encoding=UTF-8 -Dsun.jnu.encod
     && apt-get autoclean && apt-get --purge -y autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ADD server.xml  /usr/local/apache-tomcat-7.0.69/conf/
+ADD simsun.ttf /usr/local/jdk1.7.0_79/jre/lib/fonts/
 
 # 容器运行时对外开放的端口
 EXPOSE 8080
