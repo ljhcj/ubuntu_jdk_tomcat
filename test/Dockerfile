@@ -1,19 +1,21 @@
-# 默认ubuntu server长期支持版本，当前版本14.04。
-# 此Dockerfile生成Ubuntu14.04+Jdk1.7+Tomcat7的基础镜像
 FROM registry.cn-qingdao.aliyuncs.com/zyyl/ubuntu14.04:latest
 
-# 安装更新、安装wget和vim工具、修改系统时区
+ENV     JAVA_VERSION_MAJOR=8 \
+        JAVA_VERSION_MINOR=102 \
+        JAVA_VERSION_BUILD=14 \
+        JAVA_PACKAGE=jdk
+ENV     DOWNLOAD_URL=http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz
+
 RUN apt-get update \
-    && apt-get -y install wget vim gzip \
+    && apt-get -y install wget vim gzip curl \
     && /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo 'Asia/Shanghai' >/etc/timezone \
     && apt-get autoclean && apt-get --purge -y autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-    
+
 # 把java与tomcat添加到容器中
 RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-7u79-linux-x64.tar.gz \
-# && wget -P /usr/local/ https://github.com/ljhcj/ubuntu_jdk_tomcat/blob/master/soft/apache-tomcat-7.0.69.tar.gz \
-    && wget -P /usr/local/ http://download.zhongyinginfo.com/soft/apache-tomcat-7.0.69.tar.gz \
+    && wget -P /usr/local/ "${DOWNLOAD_URL}" \
     && cd /usr/local/ && tar -zxvf jdk-7u79-linux-x64.tar.gz && tar -zxvf apache-tomcat-7.0.69.tar.gz && rm -rf *.tar.gz \
     && rm -rf /usr/local/apache-tomcat-7.0.69/conf/server.xml \
     && cd /usr/local/apache-tomcat-7.0.69/webapps && rm -rf *
