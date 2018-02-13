@@ -9,9 +9,15 @@ RUN apt-get update \
     && echo 'Asia/Shanghai' >/etc/timezone \
     && apt-get autoclean && apt-get --purge -y autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    
+ENV JAVA_VERSION_MAJOR=7 \
+	JAVA_VERSION_MINOR=79 \
+	JAVA_VERSION_BUILD=15 \
+	JAVA_PACKAGE=jdk
+
 
 # 把java与tomcat添加到容器中
-RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-7u79-linux-x64.tar.gz \
+RUN wget -P /usr/local/ http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz \
     && wget -P /usr/local/ https://github.com/ljhcj/ubuntu_jdk_tomcat/blob/master/soft/apache-tomcat-7.0.69.tar.gz \
     && cd /usr/local/ && tar -zxvf jdk-7u79-linux-x64.tar.gz && tar -zxvf apache-tomcat-7.0.69.tar.gz && rm -rf *.tar.gz \
     && rm -rf /usr/local/apache-tomcat-7.0.69/conf/server.xml \
@@ -19,8 +25,8 @@ RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-7u79-linux-x6
 
 # 配置java与tomcat环境变量
 ENV JAVA_HOME /usr/local/jdk1.7.0_79
-#ENV JRE_HOME $JAVA_HOME/jre
-#ENV CLASSPATH .:$JAVA_HOME/lib:$JRE_HOME/lib
+ENV JRE_HOME $JAVA_HOME/jre
+ENV CLASSPATH .:$JAVA_HOME/lib:$JRE_HOME/lib
 ENV PATH $PATH:$JAVA_HOME/bin
 
 ENV CATALINA_HOME /usr/local/apache-tomcat-7.0.69
