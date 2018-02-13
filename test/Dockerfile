@@ -14,10 +14,10 @@ ENV JAVA_VERSION_MAJOR=7 \
 	JAVA_VERSION_MINOR=79 \
 	JAVA_VERSION_BUILD=15 \
 	JAVA_PACKAGE=jdk
-
+ENV	DOWNLOAD_URL=http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz
 
 # 把java与tomcat添加到容器中
-RUN wget -P /usr/local/ http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz \
+RUN wget -P /usr/local/ “${DOWNLOAD_URL}” \
     && wget -P /usr/local/ https://github.com/ljhcj/ubuntu_jdk_tomcat/blob/master/soft/apache-tomcat-7.0.69.tar.gz \
     && cd /usr/local/ && tar -zxvf jdk-7u79-linux-x64.tar.gz && tar -zxvf apache-tomcat-7.0.69.tar.gz && rm -rf *.tar.gz \
     && rm -rf /usr/local/apache-tomcat-7.0.69/conf/server.xml \
