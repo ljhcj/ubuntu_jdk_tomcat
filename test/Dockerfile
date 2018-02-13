@@ -12,7 +12,8 @@ RUN apt-get update \
     
 # 把java与tomcat添加到容器中
 RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-7u79-linux-x64.tar.gz \
-    && wget -P /usr/local/ https://github.com/ljhcj/ubuntu_jdk_tomcat/blob/master/soft/apache-tomcat-7.0.69.tar.gz \
+# && wget -P /usr/local/ https://github.com/ljhcj/ubuntu_jdk_tomcat/blob/master/soft/apache-tomcat-7.0.69.tar.gz \
+    && wget -P /usr/local/ http://download.zhongyinginfo.com/soft/apache-tomcat-7.0.69.tar.gz \
     && cd /usr/local/ && tar -zxvf jdk-7u79-linux-x64.tar.gz && tar -zxvf apache-tomcat-7.0.69.tar.gz && rm -rf *.tar.gz \
     && rm -rf /usr/local/apache-tomcat-7.0.69/conf/server.xml \
     && cd /usr/local/apache-tomcat-7.0.69/webapps && rm -rf *
