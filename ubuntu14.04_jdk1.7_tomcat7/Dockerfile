@@ -2,9 +2,6 @@
 # 此Dockerfile生成Ubuntu14.04+Jdk1.7+Tomcat7的基础镜像
 FROM registry.cn-qingdao.aliyuncs.com/zyyl/ubuntu14.04:latest
 
-# 作者
-MAINTAINER  "sh_ljhcj@163.com" 2017-03-30
-
 # 安装更新、安装wget和vim工具、修改系统时区
 RUN apt-get update \
     && apt-get -y install wget vim \
@@ -20,7 +17,6 @@ RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-7u79-linux-x6
     && rm -rf /usr/local/apache-tomcat-7.0.69/conf/server.xml \
     && cd /usr/local/apache-tomcat-7.0.69/webapps && rm -rf *
 
-
 # 配置java与tomcat环境变量
 ENV JAVA_HOME /usr/local/jdk1.7.0_79
 ENV JRE_HOME $JAVA_HOME/jre
@@ -35,8 +31,8 @@ ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin
 RUN sed -i '/^\# OS specific/i \JAVA_OPTS="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -server -Xms1024m -Xmx2048m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:MaxNewSize=512m"' /usr/local/apache-tomcat-7.0.69/bin/catalina.sh \
     && apt-get autoclean && apt-get --purge -y autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-ADD server.xml  /usr/local/apache-tomcat-7.0.69/conf/
-ADD simsun.ttf /usr/local/jdk1.7.0_79/jre/lib/fonts/
+ADD server.xml  /usr/local/apache-tomcat-7.0.69/conf/ \
+    && simsun.ttf /usr/local/jdk1.7.0_79/jre/lib/fonts/
 
 # 容器运行时对外开放的端口
 EXPOSE 8080
