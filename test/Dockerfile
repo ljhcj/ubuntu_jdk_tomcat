@@ -12,19 +12,19 @@ RUN apt-get update \
 
 # 把java与tomcat添加到容器中
 RUN wget -P /usr/local/ http://download.zhongyinginfo.com/soft/jdk-7u79-linux-x64.tar.gz \
-    && wget -P /usr/local/ http://download.zhongyinginfo.com/soft/apache-tomcat-7.0.69.tar.gz \
+    && wget -P /usr/local/ https://github.com/ljhcj/ubuntu_jdk_tomcat/blob/master/soft/apache-tomcat-7.0.69.tar.gz \
     && cd /usr/local/ && tar -zxvf jdk-7u79-linux-x64.tar.gz && tar -zxvf apache-tomcat-7.0.69.tar.gz && rm -rf *.tar.gz \
     && rm -rf /usr/local/apache-tomcat-7.0.69/conf/server.xml \
     && cd /usr/local/apache-tomcat-7.0.69/webapps && rm -rf *
 
 # 配置java与tomcat环境变量
 ENV JAVA_HOME /usr/local/jdk1.7.0_79
-ENV JRE_HOME $JAVA_HOME/jre
-ENV CLASSPATH .:$JAVA_HOME/lib:$JRE_HOME/lib
+#ENV JRE_HOME $JAVA_HOME/jre
+#ENV CLASSPATH .:$JAVA_HOME/lib:$JRE_HOME/lib
 ENV PATH $PATH:$JAVA_HOME/bin
 
-ENV CATALINA_HOME /usr/local/apache-tomcat-7.0.69
-ENV CATALINA_BASE /usr/local/apache-tomcat-7.0.69
+#ENV CATALINA_HOME /usr/local/apache-tomcat-7.0.69
+#ENV CATALINA_BASE /usr/local/apache-tomcat-7.0.69
 ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin
 
 # 修改tomcat内存大小并设置字符编码格式支持UTF8和日志格式
