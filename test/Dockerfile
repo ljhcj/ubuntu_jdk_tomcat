@@ -4,7 +4,7 @@ FROM registry.cn-qingdao.aliyuncs.com/zyyl/ubuntu14.04:latest
 
 # 安装更新、安装wget和vim工具、修改系统时区
 RUN apt-get update \
-    && apt-get -y install wget vim \
+    && apt-get -y install wget vim gzip \
     && /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo 'Asia/Shanghai' >/etc/timezone \
     && apt-get autoclean && apt-get --purge -y autoremove \
@@ -23,8 +23,8 @@ ENV JAVA_HOME /usr/local/jdk1.7.0_79
 #ENV CLASSPATH .:$JAVA_HOME/lib:$JRE_HOME/lib
 ENV PATH $PATH:$JAVA_HOME/bin
 
-#ENV CATALINA_HOME /usr/local/apache-tomcat-7.0.69
-#ENV CATALINA_BASE /usr/local/apache-tomcat-7.0.69
+ENV CATALINA_HOME /usr/local/apache-tomcat-7.0.69
+ENV CATALINA_BASE /usr/local/apache-tomcat-7.0.69
 ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin
 
 # 修改tomcat内存大小并设置字符编码格式支持UTF8和日志格式
