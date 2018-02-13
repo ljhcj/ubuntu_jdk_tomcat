@@ -2,9 +2,6 @@
 # 此Dockerfile生成Ubuntu14.04+Jdk1.8+Tomcat8的基础镜像
 FROM registry.cn-qingdao.aliyuncs.com/zyyl/ubuntu14.04:latest
 
-# 作者
-MAINTAINER  "sh_ljhcj@163.com" 2017-06-06
-
 # 安装更新、安装wget和ssh工具、修改系统时区
 RUN apt-get update \
     && apt-get -y install wget vim \
@@ -32,7 +29,6 @@ RUN sed -i '/^\# OS specific/i \JAVA_OPTS="-Dfile.encoding=UTF-8 -Dsun.jnu.encod
 RUN sed -i '/<Context>/a\<Resources cachingAllowed="true" cacheMaxSize="100000" />' /usr/local/apache-tomcat-8.5.4/conf/context.xml
 ADD server.xml  /usr/local/apache-tomcat-8.5.4/conf/
 
-    
 #容器运行时对外开放的端口
 EXPOSE 8080
 
